@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as firebase from 'firebase';
+
 
 
 class RoomList extends Component {
@@ -7,7 +9,7 @@ class RoomList extends Component {
 
         this.state = {
             rooms: [],
-            roomsRef: 0
+            roomsRef: 0,
         };
         this.roomsRef = this.props.firebase.database().ref('rooms');
     }
@@ -20,13 +22,26 @@ class RoomList extends Component {
         });
     }
 
+    createRoom() {
+        var roomName = document.getElementById("newRoom").value;
+        console.log(roomName);
+        var newPostKey = firebase.database().ref().child('rooms').push({name: roomName});
+        document.getElementById("newRoom").value = "";
+    }
+
+
     render() {
         return (
         <div>
             {
             this.state.rooms.map((room, index) =>
-                <h1 id="roomlist"key={room.key}>{room.name}</h1>
+                <button id="roomlist"key={room.key} onClick={ () => this.props.setRoom(room) }>{room.name}</button>
             )}
+
+            <form id="newroombox">
+            Room name: <input type="text" id = "newRoom" ></input>
+            <input type="button" value="Create a new chatroom" onClick={this.createRoom}/>            
+            </form>
         </div>
         );}
 
