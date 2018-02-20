@@ -9,13 +9,8 @@ class MessageList extends Component {
         super(props);
         this.state = 
             {
-<<<<<<< HEAD
              messages: [],
              newMessage: ''
-=======
-                messages: [],
-                newMessage: ''
->>>>>>> BoostrapApplication
             }
             this.messagesRef = firebase.database().ref('messages');
             this.createMesssage = this.createMessage.bind(this);
