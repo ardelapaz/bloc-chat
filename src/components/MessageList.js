@@ -43,7 +43,7 @@ class MessageList extends Component {
 
     render() {
         return (
-            <div>{this.props.activeRoom}
+            <div>{this.props.activeRoom }
             <form id="messageContent" onSubmit={(e) => {e.preventDefault(); this.createMessage()}} >
             Message: <input type="text" id = "messageContent" value = {this.state.newMessage} onChange = {this.onTextChange.bind(this)} ></input>
             <input type="submit"/>            
