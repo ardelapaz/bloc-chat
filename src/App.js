@@ -19,11 +19,11 @@ import MessageList from './components/MessageList';
   firebase.initializeApp(config);
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      activeRoom: ''
+      activeRoom: '-L5QkdWA-YSxcyxEW4rB',
+      roomName: "Default Room",
     }
   }
   setRoom(room) {
@@ -34,7 +34,8 @@ class App extends Component {
     return (
       <div className="App">
         <main>
-          {/* <Route exact path="/" component={RoomList} /> */} <RoomList firebase= {firebase} setRoom = {this.setRoom.bind(this)}></RoomList>
+          {/* <Route exact path="/" component={RoomList} /> */} 
+          <RoomList firebase= {firebase} setRoom = {this.setRoom.bind(this)}></RoomList>
           </main>
           <main>
             <MessageList firebase = {firebase} activeRoom = {this.state.activeRoom}>
