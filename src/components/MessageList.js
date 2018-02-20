@@ -43,7 +43,25 @@ class MessageList extends Component {
 
     render() {
         return (
-            <div>{this.props.activeRoom }
+            <div>
+            <h2 id = "activeRoomName"> {this.props.roomName}</h2>
+            <ul id = "messageList">
+            {
+            this.state.messages.map((id, index) => {
+                if (id.roomID === this.props.activeRoom) {
+                    return(
+                <li key = {index} id = "messages">
+                    <div id = "contents">
+                        <h3 id = "username">{id.userName}</h3>
+                        <p id = "content">{id.content}</p>
+                        <p id = "time">{id.sentAt}</p>
+                    </div>
+                    
+                </li>
+                    )
+                }
+            })}
+            </ul>
             <form id="messageContent" onSubmit={(e) => {e.preventDefault(); this.createMessage()}} >
             Message: <input type="text" id = "messageContent" value = {this.state.newMessage} onChange = {this.onTextChange.bind(this)} ></input>
             <input type="submit"/>            

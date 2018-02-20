@@ -22,7 +22,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeRoom: '-L5QkdWA-YSxcyxEW4rB'
+      activeRoom: '-L5QkdWA-YSxcyxEW4rB',
+      roomName: "Default Room",
     }
   }
   setRoom(room) {
