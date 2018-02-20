@@ -23,7 +23,7 @@ class App extends Component {
     super(props);
     this.state = {
       activeRoom: '-L5QkdWA-YSxcyxEW4rB',
-      roomName: "Default Room",
+      roomName: 'Default Room',
     }
   }
   setRoom(room) {

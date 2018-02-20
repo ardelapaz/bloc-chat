@@ -4,46 +4,76 @@ import * as firebase from 'firebase';
 
 
 class RoomList extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
-            rooms: []
+            rooms: [],
+            roomName: ''
         };
-        this.roomsRef = this.props.firebase.database().ref('rooms');
+        this.roomsRef = firebase.database().ref('rooms');
+        this.createRoom = this.createRoom.bind(this);
     }
 
     componentDidMount() {
         this.roomsRef.on('child_added', snapshot => {
             const room = snapshot.val();
             room.key = snapshot.key;
-            this.setState({ rooms: this.state.rooms.concat( room )});
+            this.setState({ rooms: this.state.rooms.concat(room) });
         });
     }
 
     createRoom() {
-        var roomName = document.getElementById("newRoom").value;
-        console.log(roomName);
-        var newPostKey = firebase.database().ref().child('rooms').push({name: roomName});
-        document.getElementById("newRoom").value = "";
+        this.roomsRef.push({ roomName: this.state.roomName });
+        this.setState({ roomName: '' });
+    }
+
+    onTextChange(e) {
+        const name = e.target.value;
+        this.setState({ roomName: name });
     }
 
 
     render() {
         return (
-        <div>
-            {
-            this.state.rooms.map((room, index) =>
-                <button id="roomlist"key={room.key} onClick={ () => this.props.setRoom(room) }>{room.name}</button>
-            )}
+            <div class="btn-group-vertical">
+                {
+                    this.state.rooms.map((room, index) =>
+                        <button type="button" class="btn btn-primary" class="list-group-item list-group-item-action" id="roomlist" key={room.key} onClick={() => this.props.setRoom(room)}>{room.roomName}</button>
+                    )}
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#newRoomModal" id="roomlist">Create a new chatroom</button>
 
-            <form id="newroombox">
-            Room name: <input type="text" id = "newRoom" ></input>
-            <input type="button" value="Create a new chatroom" onClick={this.createRoom}/>            
-            </form>
-        </div>
-        );}
+
+                {/* <!-- Modal --> */}
+                <div id="#newRoomModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        {/* <!-- Modal content--> */}
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Some text in the modal.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {/* <form id="newroombox" onSubmit={(e) => { e.preventDefault(); this.createRoom() }}>
+                    Room name: <input type="text" id="newRoom" value={this.state.roomName} onChange={this.onTextChange.bind(this)} ></input>
+                    <input type="button" value="Create a new chatroom" onClick={this.createRoom} />
+                </form> */}
+            </div>
+        );
+    }
 
 }
+
 
 export default RoomList;

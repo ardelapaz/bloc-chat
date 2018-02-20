@@ -1,11 +1,47 @@
 .App {
+  display: flex;
 }
 
-h1#roomlist {
+h1#roomlist { /* Room list on left */
   margin-left: 10px;
 }
 
+input#messageContent { /* message box at bottom */
+  padding: 3px;
+  margin-right: 5px;
+  width: 75vw;
+}
+form#messageContent { /* whole box and button for message at bottom */
+  position: absolute;
+  bottom: 0;
+  right: 10vw;
+}
 
+li#messages { /* list of messages (remove bullets) */
+  list-style-type: none;
+}
+
+div#contents { /* message contents needs fixed */
+  display: inline-block;
+}
+h1#activeRoomName { /* active room name at the top */
+  color: black;
+}
+div#messageList { /* */
+  width: 90vw;
+  height: 93vh;
+  margin-left: 10px;
+}
+p#time {
+  font-size: 8pt;
+}
+p#content {
+  font-size: 16pt;
+}
+button#roomList {
+  text-align:center;
+  width: 10vw;
+}
 
 
 @keyframes App-logo-spin {
