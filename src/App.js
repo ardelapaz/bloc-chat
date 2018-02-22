@@ -3,8 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
-import { Route, Link } from 'react-router-dom';
 import MessageList from './components/MessageList';
+import User from './components/User';
 
 
   // Initialize Firebase
@@ -24,21 +24,26 @@ class App extends Component {
     this.state = {
       activeRoom: '-L5QkdWA-YSxcyxEW4rB',
       roomName: 'Default Room',
+      users: []
     }
+    this.setUser = this.setUser.bind(this);
   }
   setRoom(room) {
     this.setState({ activeRoom: room.key });
-    console.log(this.state.activeRoom);
+  }
+  setUser(user) {
+    const newUser = user;
+    this.setState({users: newUser});
   }
   render() {
     return (
       <div className="App">
         <main>
-          {/* <Route exact path="/" component={RoomList} /> */} 
           <RoomList firebase= {firebase} setRoom = {this.setRoom.bind(this)}></RoomList>
+          <User firebase = {firebase} setUser = {this.setUser} userState = {this.state.users}></User>
           </main>
           <main>
-            <MessageList firebase = {firebase} activeRoom = {this.state.activeRoom}>
+            <MessageList firebase = {firebase} activeRoom = {this.state.activeRoom} userState = {this.state.users}>
             </MessageList>
             </main>
       </div>
