@@ -25,13 +25,12 @@ class MessageList extends Component {
     }
     createMessage() {
         this.messagesRef.push({
-            username: "<USERNAME HERE>",
+            username: this.props.activeUser,
             content: this.state.newMessage,
             sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
             roomID: this.props.activeRoom
         });
         this.setState({ newMessage: '' });
-
     }
 
     onTextChange(e) {
@@ -50,16 +49,16 @@ class MessageList extends Component {
 
     render() {
         return (
-            <div id = "messageList" >
+            <div id = "messageList" className = "pre-scrollable">
                 <h1 id="activeRoomName"> {this.props.roonName}</h1>
-                <ul id="messageList" class = "list-group">
+                <ul id="messageList" className = "list-group">
                     {
                         this.state.messages.map((id, index) => {
                             if (id.roomID === this.props.activeRoom) {
                                 return (
                                     <li key={index} id="messages">
                                         <div id="contents">
-                                            <h3 id="username">{id.userName}</h3>
+                                            <h3 id="username">{id.username}</h3>
                                             <p id="content">{id.content}</p>
                                             <p id="time">Sent at {this.formatTime(id.sentAt)}</p>
                                         </div>
@@ -71,7 +70,7 @@ class MessageList extends Component {
                 </ul>
                 <div id="messageBox">
                     <form id="messageContent" onSubmit={(e) => { e.preventDefault(); this.createMessage() }} >
-                        <input class = "form-control" placeholder = "Send a message here" type="text" id="messageContent" value={this.state.newMessage} onChange={this.onTextChange.bind(this)} ></input>
+                        <input className = "form-control" placeholder = "Send a message here" type="text" id="messageContent" value={this.state.newMessage} onChange={this.onTextChange.bind(this)} ></input>
                     </form>
                 </div>
             </div>

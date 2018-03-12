@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
@@ -22,9 +21,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeRoom: '-L5QkdWA-YSxcyxEW4rB',
+      activeRoom: '-L7L6cFP8edexitCXgkP',
       roomName: 'Default Room',
-      users: []
+      users: [],
+      activeUser: ''
     }
     this.setUser = this.setUser.bind(this);
   }
@@ -34,21 +34,22 @@ class App extends Component {
   setUser(user) {
     const newUser = user;
     this.setState({users: newUser});
+    this.setState({ activeUser: newUser ? newUser.displayName : 'Guest' });
   }
   render() {
     return (
       <div className="App">
         <main>
           <RoomList firebase= {firebase} setRoom = {this.setRoom.bind(this)}></RoomList>
-          <User firebase = {firebase} setUser = {this.setUser} userState = {this.state.users}></User>
+          <User firebase = {firebase} setUser = {this.setUser} activeUser = {this.state.activeUser}></User>
           </main>
           <main>
-            <MessageList firebase = {firebase} activeRoom = {this.state.activeRoom} userState = {this.state.users}>
+            <MessageList firebase = {firebase} activeUser = {this.state.activeUser} activeRoom = {this.state.activeRoom} userState = {this.state.users}>
             </MessageList>
             </main>
       </div>
     );
   }
 }
-//t
+
 export default App;

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+import { Button, Modal } from 'react-bootstrap';
+
 
 
 
@@ -9,10 +11,14 @@ class RoomList extends Component {
 
         this.state = {
             rooms: [],
-            roomName: ''
+            roomName: '',
+            show: false
         };
         this.roomsRef = firebase.database().ref('rooms');
         this.createRoom = this.createRoom.bind(this);
+        this.onTextChange = this.onTextChange.bind(this);
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     componentDidMount() {
@@ -24,6 +30,7 @@ class RoomList extends Component {
     }
 
     createRoom() {
+        this.setState({ show: false });
         this.roomsRef.push({ roomName: this.state.roomName });
         this.setState({ roomName: '' });
     }
@@ -32,43 +39,51 @@ class RoomList extends Component {
         const name = e.target.value;
         this.setState({ roomName: name });
     }
+    handleClose() {
+        this.setState({ show: false });
+      }
+    
+      handleShow() {
+        this.setState({ show: true });
+      }
+
+    setClass() {
+        if (this.props.activeRoom === this.props.roomName) {
+            return "list-group-item active"
+        } else return "list-group-item"
+    }
+    
 
 
     render() {
         return (
-            <div class="btn-group-vertical">
-                {
-                    this.state.rooms.map((room, index) =>
-                        <button type="button" class="btn btn-primary" class="list-group-item list-group-item-action" id="roomlist" key={room.key} onClick={() => this.props.setRoom(room)}>{room.roomName}</button>
-                    )}
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#newRoomModal" id="roomlist">Create a new chatroom</button>
+            <div id="roomList">
+                <div className="btn-group-vertical">
+                    {
+                        this.state.rooms.map((room, index) =>
+                            <button type="button" className={"list-group-item" + ((this.props.activeRoom === room.roomName) ? 'active' : '')} id="roomlist" key={room.key} onClick={() => this.props.setRoom(room)}>{room.roomName}</button>
+                        )}
+                    <div>
+                    <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>Create a new chatroom</Button>
+                        <Modal show={this.state.show} onHide={this.handleClose}>
+                            <Modal.Header>
+                                <Modal.Title>Create a room</Modal.Title>
+                            </Modal.Header>
 
+                            <Modal.Body><input type = "text" id = "roomName" onChange = {this.onTextChange}></input> </Modal.Body>
 
-                {/* <!-- Modal --> */}
-                <div id="#newRoomModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                        {/* <!-- Modal content--> */}
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Some text in the modal.</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-
+                            <Modal.Footer>
+                                <Button onClick = {this.handleClose}>Cancel</Button>
+                                <Button bsStyle="primary" onClick = {this.createRoom}>Create room</Button>
+                            </Modal.Footer>
+                            </Modal>
                     </div>
-                </div>
-
+                    
                 {/* <form id="newroombox" onSubmit={(e) => { e.preventDefault(); this.createRoom() }}>
                     Room name: <input type="text" id="newRoom" value={this.state.roomName} onChange={this.onTextChange.bind(this)} ></input>
                     <input type="button" value="Create a new chatroom" onClick={this.createRoom} />
                 </form> */}
+                </div>
             </div>
         );
     }

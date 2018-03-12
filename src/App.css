@@ -5,16 +5,15 @@
 h1#roomlist { /* Room list on left */
   margin-left: 10px;
 }
-
 input#messageContent { /* message box at bottom */
-  padding: 3px;
-  margin-right: 5px;
-  width: 75vw;
+  display: absolute;
+  bottom: 0;
+  width: 88vw;
 }
 form#messageContent { /* whole box and button for message at bottom */
   position: absolute;
   bottom: 0;
-  right: 10vw;
+  padding-bottom: 10px;
 }
 
 li#messages { /* list of messages (remove bullets) */
@@ -23,28 +22,51 @@ li#messages { /* list of messages (remove bullets) */
 
 div#contents { /* message contents needs fixed */
   display: inline-block;
+  width: 100%;
 }
 h1#activeRoomName { /* active room name at the top */
   color: black;
 }
-div#messageList { /* */
-  width: 90vw;
-  height: 93vh;
-  margin-left: 10px;
+div#messageList { /* div for the message list component*/
+  width: 88vw;
+  height: 95vh;
 }
-p#time {
+div#roomList {
+  width: 12vw;
+}
+p#time { /* message time */
   font-size: 8pt;
 }
-p#content {
+p#content { /* message content */
   font-size: 16pt;
 }
-button#roomList {
+button#roomList { /* List of rooms */
   text-align:center;
   width: 10vw;
 }
 
+div#loginbox { /* Signin buttons div */
+  position: absolute;
+  bottom: 0;
+  width: 12vw;
+}
+button#Signin { /* Signin buttons */
+  margin: 5px;
+  width: 11.5vw;
+}
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+p#username { /* Username text */
+  text-align: center;
+}
+.pre-scrollable {
+  max-height: 95vh;
+  max-width: 90avw;
+  overflow-y: scroll;
+}
+h3#username {
+  font-size: 16px;
+  font-weight: bold;
+}
+input#roomName {
+  width: 450px;
 }
